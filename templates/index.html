@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Text-To-Image Generator</title>
-<script src="https://js.puter.com/v2/"></script>
 <style>
     * { box-sizing: border-box; }
 
@@ -163,10 +162,12 @@
         imageFrame.appendChild(spinner);
     }
 
-    function renderImage(imgEl, prompt) {
+    function renderImage(dataUrl, prompt) {
         imageFrame.innerHTML = '';
-        imgEl.alt = prompt;
-        imageFrame.appendChild(imgEl);
+        const img = new Image();
+        img.src = dataUrl;
+        img.alt = prompt;
+        imageFrame.appendChild(img);
     }
 
     async function generateImage() {
@@ -184,8 +185,18 @@
         renderLoading();
 
         try {
-            const img = await puter.ai.txt2img(prompt, { model: "gemini-2.5-flash-image-preview" });
-            renderImage(img, prompt);
+            const res = await fetch('/generate-image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || 'Image generation failed');
+            }
+
+            renderImage(data.img, prompt);
             statusEl.textContent = 'Done!';
         } catch (err) {
             renderDefault();
