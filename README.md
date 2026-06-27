@@ -68,10 +68,11 @@ This project uses environment variables to keep the API key secure.
 
 ### 1️⃣ Create a `.env` file
 
-In the project root directory, create a file named `.env` and add your OpenAI API key:
+In the project root directory, create a file named `.env` and add your Hugging Face token:
 
 ```
-API_KEY=your_api_key_here
+HF_TOKEN=your_hugging_face_token_here
+HF_IMAGE_ENDPOINT=https://router.huggingface.co/fal-ai/ideogram/v4/lora?_subdomain=queue
 ```
 
 ⚠️ **Do NOT upload `.env` to GitHub**. It is already ignored using `.gitignore`.
@@ -146,7 +147,7 @@ http://127.0.0.1:5000
 
 ## 📌 Notes
 
-* Ensure you have a valid OpenAI API key
+* Ensure you have a valid Hugging Face API token
 * Internet connection is required for API requests
 * This project is intended for learning and portfolio demonstration
 
@@ -166,4 +167,3 @@ MCA Student | Full Stack Developer (Python & ReactJs)
 ---
 
 ⭐ If you found this project useful, consider giving it a star on GitHub!
-
